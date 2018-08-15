@@ -1,5 +1,6 @@
 var React = require("react");
 import GroceryStore from './05-Challenge-GroceryList-part4-store';
+import * as GroceryActions from './05-Challenge-GroceryList-part4-action';
 
 // Task: Ok, now the last exercise. You have to implement toggling
 //       completeness of the each grocery list's item. Make each item reactive.
@@ -64,12 +65,14 @@ class GroceryList extends React.Component {
         completed: false
       })
     });*/
-    GroceryStore.addGroceryItem(newGroceryItem);
+    //GroceryStore.addGroceryItem(newGroceryItem);
+    GroceryActions.addToGroceryStore(newGroceryItem);
   }
 
   clearList(event) {
     //this.setState({groceries: []});
-    GroceryStore.clearList();
+    //GroceryStore.clearList();
+    GroceryActions.clearList();
   }
 
 
@@ -83,7 +86,8 @@ class GroceryList extends React.Component {
     this.setState({
       groceries: newGroceries
     });*/
-    GroceryStore.toggleGroceryCompleteness(groceryIndex);
+    //GroceryStore.toggleGroceryCompleteness(groceryIndex);
+    GroceryActions.toggleGroceryCompleteness(groceryIndex);
   }
 
   render() {

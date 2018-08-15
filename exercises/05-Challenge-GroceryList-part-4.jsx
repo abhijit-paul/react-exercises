@@ -1,4 +1,5 @@
 var React = require("react");
+import GroceryStore from './05-Challenge-GroceryList-part4-store';
 
 // Task: Ok, now the last exercise. You have to implement toggling
 //       completeness of the each grocery list's item. Make each item reactive.
@@ -35,35 +36,40 @@ var React = require("react");
 //                   Or try to create your own tests.
 //                   Check out `test/05-Challange-GroceryList.js` for tests to this part.
 
+
 class GroceryList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      groceries: [
-        {
-          name: "Apples",
-          completed: false
-        }
-      ]
+      groceries: GroceryStore.getAll()
     };
-
 
     this.clearList = this.clearList.bind(this);
     this.addGroceryItem = this.addGroceryItem.bind(this);
   }
 
+  componentWillMount()  {
+    GroceryStore.on("change", () => {
+      this.setState({
+        groceries: GroceryStore.getAll()
+      });
+    });
+  }
+
 
   addGroceryItem(newGroceryItem)  {
-    this.setState({
+    /*this.setState({
       groceries: this.state.groceries.concat({
         name: newGroceryItem,
         completed: false
       })
-    });
+    });*/
+    GroceryStore.addGroceryItem(newGroceryItem);
   }
 
   clearList(event) {
-    this.setState({groceries: []});
+    //this.setState({groceries: []});
+    GroceryStore.clearList();
   }
 
 
@@ -72,20 +78,23 @@ class GroceryList extends React.Component {
   // Hint 1: Pay attention to the element's index on the list.
   toggleGroceryCompleteness(groceryIndex) {
     // Put your code here
-    const newGroceries = this.state.groceries;
+    /*const newGroceries = this.state.groceries;
     newGroceries[groceryIndex].completed = !newGroceries[groceryIndex].completed;
     this.setState({
       groceries: newGroceries
-    });
+    });*/
+    GroceryStore.toggleGroceryCompleteness(groceryIndex);
   }
 
   render() {
     let groceriesComponents = [],
         clearListButton;
-    for(var index = 0; index < this.state.groceries.length; index++) {
+
+    const { groceries } = this.state;
+    for(var index = 0; index < groceries.length; index++) {
       groceriesComponents.push(
           <GroceryListItem key={index}
-            grocery={this.state.groceries[index]}
+            grocery={groceries[index]}
             onComplete={this.toggleGroceryCompleteness.bind(this, index)}
           />
       );

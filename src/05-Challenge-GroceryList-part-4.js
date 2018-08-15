@@ -8,11 +8,15 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var React = require("react");
+var _ChallengeGroceryListPart4Store = require('./05-Challenge-GroceryList-part4-store');
+
+var _ChallengeGroceryListPart4Store2 = _interopRequireDefault(_ChallengeGroceryListPart4Store);
 
 // Task: Ok, now the last exercise. You have to implement toggling
 //       completeness of the each grocery list's item. Make each item reactive.
@@ -49,6 +53,8 @@ var React = require("react");
 //                   Or try to create your own tests.
 //                   Check out `test/05-Challange-GroceryList.js` for tests to this part.
 
+var React = require("react");
+
 var GroceryList = (function (_React$Component) {
   _inherits(GroceryList, _React$Component);
 
@@ -57,10 +63,7 @@ var GroceryList = (function (_React$Component) {
 
     _get(Object.getPrototypeOf(GroceryList.prototype), "constructor", this).call(this, props);
     this.state = {
-      groceries: [{
-        name: "Apples",
-        completed: false
-      }]
+      groceries: _ChallengeGroceryListPart4Store2["default"].getAll()
     };
 
     this.clearList = this.clearList.bind(this);
@@ -68,19 +71,32 @@ var GroceryList = (function (_React$Component) {
   }
 
   _createClass(GroceryList, [{
+    key: "componentWillMount",
+    value: function componentWillMount() {
+      var _this = this;
+
+      _ChallengeGroceryListPart4Store2["default"].on("change", function () {
+        _this.setState({
+          groceries: _ChallengeGroceryListPart4Store2["default"].getAll()
+        });
+      });
+    }
+  }, {
     key: "addGroceryItem",
     value: function addGroceryItem(newGroceryItem) {
-      this.setState({
+      /*this.setState({
         groceries: this.state.groceries.concat({
           name: newGroceryItem,
           completed: false
         })
-      });
+      });*/
+      _ChallengeGroceryListPart4Store2["default"].addGroceryItem(newGroceryItem);
     }
   }, {
     key: "clearList",
     value: function clearList(event) {
-      this.setState({ groceries: [] });
+      //this.setState({groceries: []});
+      _ChallengeGroceryListPart4Store2["default"].clearList();
     }
 
     // Fill the definition of the following method to allow completing each item
@@ -89,20 +105,24 @@ var GroceryList = (function (_React$Component) {
     key: "toggleGroceryCompleteness",
     value: function toggleGroceryCompleteness(groceryIndex) {
       // Put your code here
-      var newGroceries = this.state.groceries;
+      /*const newGroceries = this.state.groceries;
       newGroceries[groceryIndex].completed = !newGroceries[groceryIndex].completed;
       this.setState({
         groceries: newGroceries
-      });
+      });*/
+      _ChallengeGroceryListPart4Store2["default"].toggleGroceryCompleteness(groceryIndex);
     }
   }, {
     key: "render",
     value: function render() {
       var groceriesComponents = [],
           clearListButton = undefined;
-      for (var index = 0; index < this.state.groceries.length; index++) {
+
+      var groceries = this.state.groceries;
+
+      for (var index = 0; index < groceries.length; index++) {
         groceriesComponents.push(React.createElement(GroceryListItem, { key: index,
-          grocery: this.state.groceries[index],
+          grocery: groceries[index],
           onComplete: this.toggleGroceryCompleteness.bind(this, index)
         }));
       }

@@ -22,9 +22,7 @@ class HelloWorld extends React.Component {
   // `canvas` etc. Here you can see usage of a `div` element.
 
   render() {
-    return (
-        <span>Hello World</span>
-    );
+    return <span>Hello World</span>;
   }
 }
 

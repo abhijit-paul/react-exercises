@@ -1,22 +1,28 @@
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _ChallengeGroceryListPart4Store = require('./05-Challenge-GroceryList-part4-store');
 
 var _ChallengeGroceryListPart4Store2 = _interopRequireDefault(_ChallengeGroceryListPart4Store);
+
+var _ChallengeGroceryListPart4Action = require('./05-Challenge-GroceryList-part4-action');
+
+var GroceryActions = _interopRequireWildcard(_ChallengeGroceryListPart4Action);
 
 // Task: Ok, now the last exercise. You have to implement toggling
 //       completeness of the each grocery list's item. Make each item reactive.
@@ -61,9 +67,9 @@ var GroceryList = (function (_React$Component) {
   function GroceryList(props) {
     _classCallCheck(this, GroceryList);
 
-    _get(Object.getPrototypeOf(GroceryList.prototype), "constructor", this).call(this, props);
+    _get(Object.getPrototypeOf(GroceryList.prototype), 'constructor', this).call(this, props);
     this.state = {
-      groceries: _ChallengeGroceryListPart4Store2["default"].getAll()
+      groceries: _ChallengeGroceryListPart4Store2['default'].getAll()
     };
 
     this.clearList = this.clearList.bind(this);
@@ -71,18 +77,18 @@ var GroceryList = (function (_React$Component) {
   }
 
   _createClass(GroceryList, [{
-    key: "componentWillMount",
+    key: 'componentWillMount',
     value: function componentWillMount() {
       var _this = this;
 
-      _ChallengeGroceryListPart4Store2["default"].on("change", function () {
+      _ChallengeGroceryListPart4Store2['default'].on("change", function () {
         _this.setState({
-          groceries: _ChallengeGroceryListPart4Store2["default"].getAll()
+          groceries: _ChallengeGroceryListPart4Store2['default'].getAll()
         });
       });
     }
   }, {
-    key: "addGroceryItem",
+    key: 'addGroceryItem',
     value: function addGroceryItem(newGroceryItem) {
       /*this.setState({
         groceries: this.state.groceries.concat({
@@ -90,19 +96,21 @@ var GroceryList = (function (_React$Component) {
           completed: false
         })
       });*/
-      _ChallengeGroceryListPart4Store2["default"].addGroceryItem(newGroceryItem);
+      //GroceryStore.addGroceryItem(newGroceryItem);
+      GroceryActions.addToGroceryStore(newGroceryItem);
     }
   }, {
-    key: "clearList",
+    key: 'clearList',
     value: function clearList(event) {
       //this.setState({groceries: []});
-      _ChallengeGroceryListPart4Store2["default"].clearList();
+      //GroceryStore.clearList();
+      GroceryActions.clearList();
     }
 
     // Fill the definition of the following method to allow completing each item
     // Hint 1: Pay attention to the element's index on the list.
   }, {
-    key: "toggleGroceryCompleteness",
+    key: 'toggleGroceryCompleteness',
     value: function toggleGroceryCompleteness(groceryIndex) {
       // Put your code here
       /*const newGroceries = this.state.groceries;
@@ -110,10 +118,11 @@ var GroceryList = (function (_React$Component) {
       this.setState({
         groceries: newGroceries
       });*/
-      _ChallengeGroceryListPart4Store2["default"].toggleGroceryCompleteness(groceryIndex);
+      //GroceryStore.toggleGroceryCompleteness(groceryIndex);
+      GroceryActions.toggleGroceryCompleteness(groceryIndex);
     }
   }, {
-    key: "render",
+    key: 'render',
     value: function render() {
       var groceriesComponents = [],
           clearListButton = undefined;
@@ -128,18 +137,18 @@ var GroceryList = (function (_React$Component) {
       }
 
       clearListButton = React.createElement(
-        "button",
-        { className: "clear-list", disabled: this.state.groceries.length == 0, onClick: this.clearList },
-        "Clear the List"
+        'button',
+        { className: 'clear-list', disabled: this.state.groceries.length == 0, onClick: this.clearList },
+        'Clear the List'
       );
 
       var groceryAddition = React.createElement(GroceryListAddition, { addHandler: this.addGroceryItem });
 
       return React.createElement(
-        "div",
+        'div',
         null,
         React.createElement(
-          "ul",
+          'ul',
           null,
           groceriesComponents
         ),
@@ -158,7 +167,7 @@ var GroceryListAddition = (function (_React$Component2) {
   function GroceryListAddition(props) {
     _classCallCheck(this, GroceryListAddition);
 
-    _get(Object.getPrototypeOf(GroceryListAddition.prototype), "constructor", this).call(this, props);
+    _get(Object.getPrototypeOf(GroceryListAddition.prototype), 'constructor', this).call(this, props);
     this.state = {
       newGroceryName: ""
     };
@@ -168,19 +177,19 @@ var GroceryListAddition = (function (_React$Component2) {
   }
 
   _createClass(GroceryListAddition, [{
-    key: "onProductInputKeyPress",
+    key: 'onProductInputKeyPress',
     value: function onProductInputKeyPress(event) {
       if (event.key === 'Enter') {
         this.addGroceryItem();
       }
     }
   }, {
-    key: "inputChanged",
+    key: 'inputChanged',
     value: function inputChanged(event) {
       this.setState({ newGroceryName: event.target.value });
     }
   }, {
-    key: "addGroceryItem",
+    key: 'addGroceryItem',
     value: function addGroceryItem() {
       if (this.state.newGroceryName) {
         this.props.addHandler(this.state.newGroceryName);
@@ -190,17 +199,17 @@ var GroceryListAddition = (function (_React$Component2) {
       }
     }
   }, {
-    key: "render",
+    key: 'render',
     value: function render() {
-      var newProductInput = React.createElement("input", { className: "new-item", type: "text", value: this.state.newGroceryName, onKeyPress: this.onProductInputKeyPress, onChange: this.inputChanged });
+      var newProductInput = React.createElement('input', { className: 'new-item', type: 'text', value: this.state.newGroceryName, onKeyPress: this.onProductInputKeyPress, onChange: this.inputChanged });
       var newProductAddButton = React.createElement(
-        "button",
-        { className: "add-product", disabled: this.state.newGroceryName.trim().length == 0, onClick: this.addGroceryItem },
-        "Add new Product"
+        'button',
+        { className: 'add-product', disabled: this.state.newGroceryName.trim().length == 0, onClick: this.addGroceryItem },
+        'Add new Product'
       );
 
       return React.createElement(
-        "span",
+        'span',
         null,
         newProductInput,
         newProductAddButton
@@ -217,15 +226,15 @@ var GroceryListItem = (function (_React$Component3) {
   function GroceryListItem(props) {
     _classCallCheck(this, GroceryListItem);
 
-    _get(Object.getPrototypeOf(GroceryListItem.prototype), "constructor", this).call(this, props);
+    _get(Object.getPrototypeOf(GroceryListItem.prototype), 'constructor', this).call(this, props);
   }
 
   _createClass(GroceryListItem, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       var completed = this.props.grocery.completed ? "completed" : '';
       return React.createElement(
-        "li",
+        'li',
         { key: this.props.key, className: completed, onClick: this.props.onComplete },
         this.props.grocery.name
       );
@@ -235,5 +244,5 @@ var GroceryListItem = (function (_React$Component3) {
   return GroceryListItem;
 })(React.Component);
 
-exports["default"] = GroceryList;
-module.exports = exports["default"];
+exports['default'] = GroceryList;
+module.exports = exports['default'];

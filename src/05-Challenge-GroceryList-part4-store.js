@@ -62,7 +62,27 @@ var GroceryStore = (function (_EventEmitter) {
   }, {
     key: "handleActions",
     value: function handleActions(action) {
-      console.log(action);
+      switch (action.type) {
+        case "ADD_GROCERY":
+          {
+            this.addGroceryItem(action.item);
+            break;
+          }
+        case "CLEAR_GROCERY":
+          {
+            this.clearList();
+            break;
+          }
+        case "TOGGLE_COMPLETENESS":
+          {
+            this.toggleGroceryCompleteness(action.groceryIndex);
+            break;
+          }
+        default:
+          {
+            console.error("UnIdentified action");
+          }
+      }
     }
   }]);
 
@@ -74,7 +94,6 @@ var GroceryStore = (function (_EventEmitter) {
 var groceryStore = new GroceryStore();
 
 _ChallengeGroceryListPart4Dispatcher2["default"].register(groceryStore.handleActions.bind(groceryStore));
-_ChallengeGroceryListPart4Dispatcher2["default"].dispatch({ type: "helloworld" });
 
 exports["default"] = groceryStore;
 module.exports = exports["default"];
